@@ -6,6 +6,8 @@ use ser::{Stream, Serializable};
 use chain::Block;
 use primitives::hash::H256;
 
+const MAGIC_ELCOIN: U32 = 0x13373737;
+
 const MAGIC_MAINNET: u32 = 0xD9B4BEF9;
 const MAGIC_TESTNET: u32 = 0x0709110B;
 const MAGIC_REGTEST: u32 = 0xDAB5BFFA;
@@ -18,6 +20,8 @@ const MAX_BITS_REGTEST: u32 = 0x207fffff;
 /// Bitcoin [network](https://bitcoin.org/en/glossary/mainnet)
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Magic {
+	/// The canonical and main network for Elcoin transactions, where e-toshis have real economic value.
+	Elcoin,
 	/// The original and main network for Bitcoin transactions, where satoshis have real economic value.
 	Mainnet,
 	/// The main bitcoin testnet.
@@ -33,6 +37,7 @@ pub enum Magic {
 impl From<Magic> for u32 {
 	fn from(m: Magic) -> Self {
 		match m {
+			Magic::Elcoin => MAGIC_ELCOIN,
 			Magic::Mainnet => MAGIC_MAINNET,
 			Magic::Testnet => MAGIC_TESTNET,
 			Magic::Regtest => MAGIC_REGTEST,
@@ -45,6 +50,7 @@ impl From<Magic> for u32 {
 impl From<u32> for Magic {
 	fn from(u: u32) -> Self {
 		match u {
+			MAGIC_ELCOIN => Magic::Elcoin,
 			MAGIC_MAINNET => Magic::Mainnet,
 			MAGIC_TESTNET => Magic::Testnet,
 			MAGIC_REGTEST => Magic::Regtest,
@@ -57,7 +63,8 @@ impl From<u32> for Magic {
 impl Magic {
 	pub fn max_bits(&self) -> Compact {
 		match *self {
-			Magic::Mainnet | Magic::Other(_) => MAX_BITS_MAINNET.into(),
+			Magic::Elcoin | Magic::Other(_) => MAX_BITS_MAINNET.into(),
+			Magic::Mainnet => MAX_BITS_MAINNET.into(),
 			Magic::Testnet => MAX_BITS_TESTNET.into(),
 			Magic::Regtest => MAX_BITS_REGTEST.into(),
 			Magic::Unitest => Compact::max_value(),
@@ -66,7 +73,8 @@ impl Magic {
 
 	pub fn port(&self) -> u16 {
 		match *self {
-			Magic::Mainnet | Magic::Other(_)  => 8333,
+			Magic::Elcoin | Magic::Other(_) => 3131;
+			Magic::Mainnet => 8333,
 			Magic::Testnet => 18333,
 			Magic::Regtest | Magic::Unitest => 18444,
 		}
@@ -74,7 +82,8 @@ impl Magic {
 
 	pub fn rpc_port(&self) -> u16 {
 		match *self {
-			Magic::Mainnet | Magic::Other(_) => 8332,
+			Magic::Elcoin | Magic::Other(_) => 3130,
+			Magic::Mainnet => 8332,
 			Magic::Testnet => 18332,
 			Magic::Regtest | Magic::Unitest => 18443,
 		}
@@ -82,7 +91,8 @@ impl Magic {
 
 	pub fn genesis_block(&self) -> Block {
 		match *self {
-			Magic::Mainnet | Magic::Other(_) => "0100000000000000000000000000000000000000000000000000000000000000000000003ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a29ab5f49ffff001d1dac2b7c0101000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000".into(),
+			Magic::Elcoin | Magic::Other(_) => "0",//TODO
+			Magic::Mainnet => "0100000000000000000000000000000000000000000000000000000000000000000000003ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a29ab5f49ffff001d1dac2b7c0101000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000".into(),
 			Magic::Testnet => "0100000000000000000000000000000000000000000000000000000000000000000000003ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4adae5494dffff001d1aa4ae180101000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000".into(),
 			Magic::Regtest | Magic::Unitest => "0100000000000000000000000000000000000000000000000000000000000000000000003ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4adae5494dffff7f20020000000101000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000".into(),
 		}
