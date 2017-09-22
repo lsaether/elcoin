@@ -55,10 +55,12 @@ impl DisplayLayout for Address {
 		let mut result = [0u8; 25];
 
 		result[0] = match (self.network, self.kind) {
-			(Network::Mainnet, Type::P2PKH) => 0,
-			(Network::Mainnet, Type::P2SH) => 5,
-			(Network::Testnet, Type::P2PKH) => 111,
-			(Network::Testnet, Type::P2SH) => 196,
+			(Network::Elcoin, Type::P2PKH) => 33,		// 0x21, should yield `E` as first char in addr
+			(Network::Elcoin, Type::P2SH) => 130,		// 0x82, should yield `u` as first char in addr
+			(Network::Mainnet, Type::P2PKH) => 0,		// 0x00
+			(Network::Mainnet, Type::P2SH) => 5,		// 0x05
+			(Network::Testnet, Type::P2PKH) => 111,		// 0x6F
+			(Network::Testnet, Type::P2SH) => 196,		// 0xC4
 		};
 
 		result[1..21].copy_from_slice(&*self.hash);
@@ -78,6 +80,8 @@ impl DisplayLayout for Address {
 		}
 
 		let (network, kind) = match data[0] {
+			33 => (Network::Elcoin, Type::P2PKH),
+			130 => (Network::Elcoin, Type::P2SH),
 			0 => (Network::Mainnet, Type::P2PKH),
 			5 => (Network::Mainnet, Type::P2SH),
 			111 => (Network::Testnet, Type::P2PKH),

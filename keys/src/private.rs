@@ -56,8 +56,9 @@ impl DisplayLayout for Private {
 	fn layout(&self) -> Self::Target {
 		let mut result = vec![];
 		let network_byte = match self.network {
-			Network::Mainnet => 128,
-			Network::Testnet => 239,
+			Network::Elcoin  => 231,		// 0xE7
+			Network::Mainnet => 128,		// 0x80
+			Network::Testnet => 239,		// 0xEF
 		};
 
 		result.push(network_byte);
@@ -87,6 +88,7 @@ impl DisplayLayout for Private {
 		}
 
 		let network = match data[0] {
+			231 => Network::Elcoin,
 			128 => Network::Mainnet,
 			239 => Network::Testnet,
 			_ => return Err(Error::InvalidPrivate),

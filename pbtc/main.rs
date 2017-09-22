@@ -1,4 +1,4 @@
-//! Parity bitcoin client.
+//! The Elcoin daemon
 
 #[macro_use]
 extern crate clap;
