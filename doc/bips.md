@@ -1,4 +1,4 @@
-BIPs that are implemented by pbtc
+BIPs that are implemented by elcd
 
 - `-` not implemented
 - `+` implemented
@@ -6,7 +6,7 @@ BIPs that are implemented by pbtc
 - `a` application layer
 - `w` work in progress
 
-| BIPs | pbtc | core | unlimited |
+| BIPs | elcd | core | unlimited |
 | ------ | ------ | ------ | ------ |
 | [BIP 9][BIP9] | + | + | ? |
 | [BIP 11][BIP11] | a | + | ? |

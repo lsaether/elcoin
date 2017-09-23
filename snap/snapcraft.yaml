@@ -9,7 +9,7 @@ confinement: strict
 
 apps:
   parity-bitcoin:
-    command: pbtc
+    command: elcd
     plugs: [network, network-bind]
 
 parts:

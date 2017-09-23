@@ -1,5 +1,5 @@
 [package]
-name = "pbtc"
+name = "elcd"
 version = "0.1.0"
 license = "GPL-3.0"
 authors = ["Parity Technologies <admin@parity.io>"]
@@ -41,8 +41,8 @@ debug = true
 debug = true
 
 [[bin]]
-path = "pbtc/main.rs"
-name = "pbtc"
+path = "elcd/main.rs"
+name = "elcd"
 
 [workspace]
 members = ["bencher"]

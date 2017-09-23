@@ -756,7 +756,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "pbtc"
+name = "elcd"
 version = "0.1.0"
 dependencies = [
  "app_dirs 1.1.1 (registry+https://github.com/rust-lang/crates.io-index)",

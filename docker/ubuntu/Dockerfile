@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 WORKDIR /build
-ADD . /build/pbtc
+ADD . /build/elcd
 
 # install tools and dependencies
 RUN apt-get update && \
@@ -30,10 +30,10 @@ cargo -V && \
 gcc -v &&\
 g++ -v
 
-# build pbtc
-RUN cd pbtc && cargo build --release --verbose
+# build elcd
+RUN cd elcd && cargo build --release --verbose
 
-RUN file /build/pbtc/target/release/pbtc
+RUN file /build/elcd/target/release/elcd
 
 EXPOSE 8333 18333 8332 18332
-ENTRYPOINT ["/build/pbtc/target/release/pbtc"]
+ENTRYPOINT ["/build/elcd/target/release/elcd"]

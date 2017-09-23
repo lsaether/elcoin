@@ -24,15 +24,15 @@ RUN apt-get update && \
  PATH=/root/.cargo/bin:$PATH && \
 # show backtraces
  RUST_BACKTRACE=1 && \
-# build pbtc-ubuntu
+# build elcd-ubuntu
  cd /build&&git clone https://github.com/paritytech/parity-bitcoin && \
         cd parity-bitcoin && \
 	git pull&& \
 	git checkout $BUILD_TAG && \
         cargo build --verbose --release && \
-        strip /build/parity-bitcoin/target/release/pbtc && \
- file /build/parity-bitcoin/target/release/pbtc&&mkdir -p /pbtc-ubuntu&& \
- cp /build/parity-bitcoin/target/release/pbtc /pbtc-ubuntu/pbtc-ubuntu&& \
+        strip /build/parity-bitcoin/target/release/elcd && \
+ file /build/parity-bitcoin/target/release/elcd&&mkdir -p /elcd-ubuntu&& \
+ cp /build/parity-bitcoin/target/release/elcd /elcd-ubuntu/elcd-ubuntu&& \
 #cleanup Docker image
  rm -rf /root/.cargo&&rm -rf /root/.multirust&&rm -rf /root/.rustup&&rm -rf /build&&\
  apt-get purge -y  \
@@ -48,4 +48,4 @@ RUN apt-get update && \
  rm -rf /var/lib/apt/lists/*
 # setup ENTRYPOINT
 EXPOSE 8333 18333 8332 18332
-ENTRYPOINT ["/pbtc-ubuntu/pbtc-ubuntu"]
+ENTRYPOINT ["/elcd-ubuntu/elcd-ubuntu"]
