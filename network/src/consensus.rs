@@ -60,7 +60,27 @@ pub enum ConsensusFork {
 impl ConsensusParams {
 	pub fn new(magic: Magic, fork: ConsensusFork) -> Self {
 		match magic {
-			Magic::Mainnet | Magic::Other(_) => ConsensusParams {
+			Magic::Elcoin | Magic::Other(_) => ConsensusParams {
+				network: magic,
+				bip16_time: 0,
+				bip34_height: 0,
+				bip65_height: 0,
+				bip66_height: 0,
+				fork: fork,
+				rule_change_activation_threshold: 1916, // 95%
+				miner_confirmation_window: 2016, //TODO look into possible changes
+				csv_deployment: Some(Deployment {
+					name: "csv",
+					bit: 0,
+					start_time: 0,
+					timeout: 0,
+					activation: Some(0),
+				}),
+				segwit_deployment: match fork {
+					_ => None,
+				},
+			},
+			Magic::Mainnet => ConsensusParams {
 				network: magic,
 				bip16_time: 1333238400,	// Apr 1 2012
 				bip34_height: 227931,	// 000000000000024b89b42a942fe0d9fea3bb44ab7bd1b19115dd6a759c0808b8
