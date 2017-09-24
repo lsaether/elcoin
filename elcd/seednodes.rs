@@ -1,4 +1,12 @@
 
+pub fn elcoin_seednodes() -> Vec<&'static str> {
+	vec![
+		"",
+		"",
+		"",		// TODO
+	]
+}
+
 pub fn mainnet_seednodes() -> Vec<&'static str> {
 	vec![
 		// Pieter Wuille

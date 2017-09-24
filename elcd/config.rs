@@ -4,7 +4,7 @@ use db;
 use message::Services;
 use network::{Magic, ConsensusParams, ConsensusFork, SEGWIT2X_FORK_BLOCK, BITCOIN_CASH_FORK_BLOCK};
 use p2p::InternetProtocol;
-use seednodes::{mainnet_seednodes, testnet_seednodes, segwit2x_seednodes};
+use seednodes::{elcoin_seednodes, mainnet_seednodes, testnet_seednodes, segwit2x_seednodes};
 use rpc_apis::ApiSet;
 use {USER_AGENT, REGTEST_USER_AGENT};
 use primitives::hash::H256;
@@ -61,12 +61,14 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
 	let consensus = ConsensusParams::new(magic, consensus_fork);
 
 	let (in_connections, out_connections) = match magic {
-		Magic::Testnet | Magic::Mainnet | Magic::Other(_) => (10, 10),
+		Magic::Elcoin | Magic::Other(_) => (8, 8),
+		Magic::Testnet | Magic::Mainnet => (10, 10),
 		Magic::Regtest | Magic::Unitest => (1, 0),
 	};
 
 	let p2p_threads = match magic {
-		Magic::Testnet | Magic::Mainnet | Magic::Other(_) => 4,
+		Magic::Elcoin | Magic::Other(_) => 3,
+		Magic::Testnet | Magic::Mainnet => 4,
 		Magic::Regtest | Magic::Unitest => 1,
 	};
 
@@ -77,6 +79,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
 		ConsensusFork::BitcoinCash(_) => "/UAHF",
 	};
 	let user_agent = match magic {
+		Magic::Elcoin => format!("{}{}", USER_AGENT, user_agent_suffix),
 		Magic::Testnet | Magic::Mainnet | Magic::Unitest | Magic::Other(_) => format!("{}{}", USER_AGENT, user_agent_suffix),
 		Magic::Regtest => REGTEST_USER_AGENT.into(),
 	};
@@ -99,6 +102,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
 	let mut seednodes: Vec<String> = match matches.value_of("seednode") {
 		Some(s) => vec![s.parse().map_err(|_| "Invalid seednode".to_owned())?],
 		None => match magic {
+			Magic::Elcoin => elcoin_seednodes().into_iter().map(Into::into).collect(),
 			Magic::Mainnet => mainnet_seednodes().into_iter().map(Into::into).collect(),
 			Magic::Testnet => testnet_seednodes().into_iter().map(Into::into).collect(),
 			Magic::Other(_) | Magic::Regtest | Magic::Unitest => Vec::new(),
