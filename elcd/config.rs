@@ -53,7 +53,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
 	let magic = match (matches.is_present("testnet"), matches.is_present("regtest")) {
 		(true, false) => Magic::Testnet,
 		(false, true) => Magic::Regtest,
-		(false, false) => Magic::Mainnet,
+		(false, false) => Magic::Elcoin,
 		(true, true) => return Err("Only one testnet option can be used".into()),
 	};
 
