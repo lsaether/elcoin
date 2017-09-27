@@ -1,8 +1,4 @@
-# The Parity Bitcoin client.
-
-[![Build Status][travis-image]][travis-url] [![Snap Status](https://build.snapcraft.io/badge/paritytech/parity-bitcoin.svg)](https://build.snapcraft.io/user/paritytech/parity-bitcoin)
-
-Gitter [![Gitter https://gitter.im/paritytech/parity-bitcoin](https://badges.gitter.im/paritytech/parity-bitcoin.svg)](https://gitter.im/paritytech/parity-bitcoin)
+# The Electric Coin Daemon
 
 - [Installing from source](#installing-from-source)
 
@@ -23,11 +19,6 @@ Gitter [![Gitter https://gitter.im/paritytech/parity-bitcoin](https://badges.git
 - [Internal Documentation](#internal-documentation)
 
 - [Project Graph][graph]
-
-[graph]: ./tools/graph.svg
-[travis-image]: https://travis-ci.com/paritytech/parity-bitcoin.svg?token=DMFvZu71iaTbUYx9UypX&branch=master
-[travis-url]: https://travis-ci.com/paritytech/parity-bitcoin
-[doc-url]: https://paritytech.github.io/parity-bitcoin/elcd/index.html
 
 ## Installing from source
 
@@ -78,14 +69,6 @@ cargo build -p elcd --release
 ```
 
 `elcd` is now available at either `./target/debug/elcd` or `./target/release/elcd`.
-
-## Installing the snap
-
-In any of the [supported Linux distros](https://snapcraft.io/docs/core/install):
-
-```
-sudo snap install parity-bitcoin --edge
-```
 
 ## Running tests
 
@@ -215,7 +198,7 @@ SUBCOMMANDS:
 
 #### Network
 
-The Parity-bitcoin `network` interface.
+The Elcoin `network` interface.
 
 ##### addnode
 
@@ -249,7 +232,7 @@ Get the peer count.
 
 #### Blockchain
 
-The Parity-bitcoin `blockchain` data interface.
+The Elcoin `blockchain` data interface.
 
 ##### getbestblockhash
 
@@ -295,7 +278,7 @@ Get statistics about the unspent transaction output set.
 
 #### Miner
 
-The Parity-bitcoin `miner` data interface.
+The Elcoin `miner` data interface.
 
 ##### getblocktemplate
 
@@ -305,7 +288,7 @@ Get block template for mining.
 
 #### Raw
 
-The Parity-bitcoin `raw` data interface.
+The Elcoin `raw` data interface.
 
 
 ##### getrawtransaction
