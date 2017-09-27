@@ -1,0 +1,11 @@
+[package]
+name = "genesis"
+version = "0.1.0"
+authors = ["Lsaether <Lsaether@protonmail.com>"]
+
+[dependencies]
+chain = { path = "../chain" }
+keys = { path = "../keys" }
+serialization = { path = "../serialization" }
+
+

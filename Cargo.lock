@@ -269,6 +269,7 @@ dependencies = [
  "clap 2.26.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "db 0.1.0",
  "env_logger 0.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "genesis 0.1.0",
  "import 0.1.0",
  "keys 0.1.0",
  "libc 0.2.29 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -331,6 +332,15 @@ version = "0.3.51"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "rayon 0.7.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "genesis"
+version = "0.1.0"
+dependencies = [
+ "chain 0.1.0",
+ "keys 0.1.0",
+ "serialization 0.1.0",
 ]
 
 [[package]]
