@@ -1,4 +1,4 @@
-# The Electric Coin Daemon
+# Electric Coin Daemon
 
 - [Installing from source](#installing-from-source)
 
@@ -52,8 +52,8 @@ sudo apt-get install build-essential
 Now let's clone `elcd` and enter it's directory:
 
 ```
-git clone https://github.com/paritytech/parity-bitcoin
-cd parity-bitcoin
+git clone https://github.com/lsaether/elcoin
+cd elcoin
 ```
 
 `elcd` can be build in two modes. `--debug` and `--release`. Debug is the default.
@@ -112,8 +112,6 @@ java -jar pull-tests-f56eec3.jar
 
 ## Going online
 
-By default parity connects to bitcoind-seednodes. Full list is [here](./elcd/seednodes.rs).
-
 Before starting synchronization, you must decide - which fork to follow - SegWit (`--segwit` flag), SegWit2x (`--segwit2x` flag) or Bitcoin Cash (`--bitcoin-cash` flag). On next start, passing the same flag is optional, as the database is already bound to selected fork and won't be synchronized using other verification rules.
 
 To start syncing the main network, just start the client, passing selected fork flag. For example:
@@ -134,29 +132,12 @@ To not print any syncing progress add `--quiet` flag:
 ./target/release/elcd --segwit --quiet
 ```
 
-## Importing bitcoind database
-
-It it is possible to import existing `bitcoind` database:
-
-```
-# where $BITCOIND_DB is path to your bitcoind database, e.g., "/Users/user/Library/Application Support"
-./target/release/elcd import "$BITCOIND_DB/Bitcoin/blocks"
-```
-
-By default import verifies imported the blocks. You can disable this, by adding `--verification-level==none` flag.
-
-```
-./target/release/elcd import "#BITCOIND_DB/Bitcoin/blocks" --segwit --skip-verification
-```
-
 ## Command line interface
 
 Full list of CLI options, which is available under `elcd --help`:
 
 ```
 elcd 0.1.0
-Parity Technologies <info@parity.io>
-Parity Bitcoin client
 
 USAGE:
     elcd [FLAGS] [OPTIONS] [SUBCOMMAND]
